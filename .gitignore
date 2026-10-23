@@ -1,0 +1,10 @@
+# Fichiers système macOS
+.DS_Store
+
+# Build Maven
+target/
+
+# Configuration des éditeurs
+.vscode/
+.idea/
+*.iml
