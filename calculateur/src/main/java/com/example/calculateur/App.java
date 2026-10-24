@@ -28,11 +28,10 @@ public class App {
                 break;
             }
             String ligne = scanner.nextLine().trim();
-            annulation = affichage.verifierCaratereOk(ligne);
+            annulation = affichage.verifierAnnulation(ligne);
             if(annulation) break;
             
-
-            if (affichage.verifierCaratereOk(ligne)) {
+            if (affichage.verifierFormatOk(ligne)) {
                 continue;
             }
             try {
@@ -42,12 +41,12 @@ public class App {
                 double resultat = calculateur.calculer(a, parties[1].charAt(0), b);
                 System.out.println("= " + resultat);
             } catch (NumberFormatException e) {
-                System.out.println("Nombre invalide.");
+                affichage.afficherErreur("Saisie invalide !", e.getMessage());
             } catch (ArithmeticException | IllegalArgumentException e) {
-                System.out.println("Erreur : " + e.getMessage());
+                affichage.afficherErreur("Erreur de saisie ! ", e.getMessage());
             }
-        }
-
+        }       
+        scanner.close();
         affichage.terminer();
     }
 }
