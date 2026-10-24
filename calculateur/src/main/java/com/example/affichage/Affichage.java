@@ -53,13 +53,21 @@ public class Affichage implements IAffichage {
      * */
     @Override
     public boolean verifierFormatOk(String ligne) {
-        String[] parties = ligne.split("\\s+");
-        afficher(Arrays.toString(parties));
-        if (parties.length != 3) {
-            afficher("Format attendu : <nombre> <opérateur> <nombre>");
+        try{
+            String[] parties = ligne.split("\\s+");
+            afficher(ligne);
+            afficher(Arrays.toString(parties));
+            if (parties.length != 3) {
+                afficher("Format attendu : <nombre> <opérateur> <nombre>");
+                return false;
+            }    
+            return true;
+        }catch(ArrayIndexOutOfBoundsException e){
+            afficherErreur("Erreur de saisie !", e.getMessage());
             return false;
-        }    
-        return true;
+        }
+       
+      
     }
 
 }

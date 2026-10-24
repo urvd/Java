@@ -27,7 +27,7 @@ public class App {
             if (!scanner.hasNextLine()) {
                 break;
             }
-            String ligne = scanner.nextLine().trim();
+            String ligne = scanner.nextLine().trim() ;
             affichage.afficher(ligne);
             annulation = affichage.verifierAnnulation(ligne);
             if(annulation) break;
