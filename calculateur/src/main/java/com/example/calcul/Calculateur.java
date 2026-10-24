@@ -1,9 +1,9 @@
-package com.example.calculateur;
+package com.example.calcul;
 
 /**
- * Calculateur simple proposant les quatre opérations de base.
+ * Calculateur simple proposant des opérations.
  */
-public class Calculateur {
+public class Calculateur implements ICalcul {
 
     public double additionner(double a, double b) {
         return a + b;

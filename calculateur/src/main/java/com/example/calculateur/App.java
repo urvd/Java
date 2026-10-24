@@ -2,33 +2,41 @@ package com.example.calculateur;
 
 import java.util.Scanner;
 
+import com.example.affichage.Affichage;
+import com.example.affichage.IAffichage;
+import com.example.calcul.Calculateur;
+import com.example.calcul.ICalcul;
+
 /**
  * Point d'entrée : calculateur interactif en ligne de commande.
  */
 public class App {
 
     public static void main(String[] args) {
-        Calculateur calculateur = new Calculateur();
+        ICalcul calculateur = new Calculateur();
+        IAffichage affichage = new Affichage();
+        boolean sauvegarde = false;
+        boolean annulation = false;
+
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Calculateur ===");
-        System.out.println("Saisissez une opération (ex : 3 + 4), ou 'q' pour quitter.");
+        affichage.commencer();
 
-        while (true) {
-            System.out.print("> ");
+        while (sauvegarde == false || annulation  == false) {
+            affichage.afficher("> ");
             if (!scanner.hasNextLine()) {
                 break;
             }
             String ligne = scanner.nextLine().trim();
-            if (ligne.equalsIgnoreCase("q")) {
-                break;
-            }
-            String[] parties = ligne.split("\\s+");
-            if (parties.length != 3 || parties[1].length() != 1) {
-                System.out.println("Format attendu : <nombre> <opérateur> <nombre>");
+            annulation = affichage.verifierCaratereOk(ligne);
+            if(annulation) break;
+            
+
+            if (affichage.verifierCaratereOk(ligne)) {
                 continue;
             }
             try {
+                String[] parties = ligne.split("\\s+");
                 double a = Double.parseDouble(parties[0]);
                 double b = Double.parseDouble(parties[2]);
                 double resultat = calculateur.calculer(a, parties[1].charAt(0), b);
@@ -39,6 +47,7 @@ public class App {
                 System.out.println("Erreur : " + e.getMessage());
             }
         }
-        System.out.println("Au revoir !");
+
+        affichage.terminer();
     }
 }
