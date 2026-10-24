@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import com.example.calcul.Calculateur;
+import com.example.calcul.ICalcul;
 
 class CalculateurTest {
 
-    private final Calculateur calculateur = new Calculateur();
+    private final ICalcul calculateur = new Calculateur();
 
     @Test
     void additionner() {

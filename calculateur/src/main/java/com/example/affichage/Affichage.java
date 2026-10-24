@@ -1,4 +1,5 @@
 package com.example.affichage;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class Affichage implements IAffichage {
     public void afficher(String texte) {
         log.info(texte);
     }
-    //TODO : mieux gérer les exeption, les centralisé si possible
+    //TODO : mieux gérer les exception, les centralisés si possible
     @Override
     public void afficherErreur(String texte, String msgErr) {
         log.info(texte);
@@ -45,13 +46,16 @@ public class Affichage implements IAffichage {
      * /
     
     /**
-     * TODO : Faire appel que si l'annulation et de la sauveguarde
-     * pour la taiche de la chaines composant le carac  = 4, evaluer le 4 ème caractère
+     * Vérification du Format : en 3 entité séparé
+     * TODO : Format: 1 - A Faire évoluer en suite ou liste d'entités séparé
+     * TODO : Format: 2 - A Faire évoluer pour admetre 1 seul entité mais pas e
+     * exclure 2 entités.
      * */
     @Override
     public boolean verifierFormatOk(String ligne) {
         String[] parties = ligne.split("\\s+");
-        if (parties.length != 3 || parties.length != 2 || parties.length != 1) {
+        afficher(Arrays.toString(parties));
+        if (parties.length != 3) {
             afficher("Format attendu : <nombre> <opérateur> <nombre>");
             return false;
         }    

@@ -28,6 +28,7 @@ public class App {
                 break;
             }
             String ligne = scanner.nextLine().trim();
+            affichage.afficher(ligne);
             annulation = affichage.verifierAnnulation(ligne);
             if(annulation) break;
             
@@ -39,7 +40,7 @@ public class App {
                 double a = Double.parseDouble(parties[0]);
                 double b = Double.parseDouble(parties[2]);
                 double resultat = calculateur.calculer(a, parties[1].charAt(0), b);
-                System.out.println("= " + resultat);
+                affichage.afficher("=  {" +resultat +"}");
             } catch (NumberFormatException e) {
                 affichage.afficherErreur("Saisie invalide !", e.getMessage());
             } catch (ArithmeticException | IllegalArgumentException e) {
