@@ -1,11 +1,12 @@
-package com.example.core.affichage;
+package com.example.calculateur.core.affichage;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-import com.example.core.commun.erreur.CommunException;
+
+import com.example.calculateur.core.commun.erreur.CommunException;
 
 public class AffichageTest {
     private final IAffichage affichage = new Affichage();

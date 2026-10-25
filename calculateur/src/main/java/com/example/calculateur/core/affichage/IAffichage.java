@@ -1,5 +1,5 @@
-package com.example.core.affichage;
-import com.example.core.commun.erreur.CommunException;
+package com.example.calculateur.core.affichage;
+import com.example.calculateur.core.commun.erreur.CommunException;
 
 public interface IAffichage {
     public void commencer();

@@ -1,4 +1,4 @@
-package com.example.core.commun.erreur;
+package com.example.calculateur.core.commun.erreur;
 
 public enum ErrorType {
     FORMAT_ERROR("Format de saisie incorrect"),

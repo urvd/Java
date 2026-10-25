@@ -1,12 +1,10 @@
-package com.example.core.affichage;
-
-import java.util.IllegalFormatException;
+package com.example.calculateur.core.affichage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.core.commun.erreur.CommunException;
-
+import com.example.calculateur.core.commun.erreur.CommunException;
+import static com.example.calculateur.core.commun.erreur.ErrorType.*;
 
 public class Affichage implements IAffichage {
     private static final Logger log = LoggerFactory.getLogger(Affichage.class);
@@ -58,7 +56,13 @@ public class Affichage implements IAffichage {
             }
             return parties.length == 3;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            throw new CommunException("CommunException " + ligne, e);
+            if (e instanceof IllegalArgumentException) {
+                throw new CommunException(FORMAT_ERROR, e);
+            } else if (e instanceof ArrayIndexOutOfBoundsException) {
+                throw new CommunException(ARRAY_INDEX_OUT_OF_BOUNDS_ERROR, e);
+            }else {
+                throw new CommunException(UNDEFINED_ERROR, e);
+            }
         }
     }
 }

@@ -2,11 +2,15 @@ package com.example.calculateur;
 
 import java.util.Scanner;
 
-import com.example.core.affichage.Affichage;
-import com.example.core.affichage.IAffichage;
-import com.example.core.calcul.Calculateur;
-import com.example.core.calcul.ICalcul;
-import com.example.core.commun.erreur.CommunException;
+import com.example.calculateur.core.affichage.Affichage;
+import com.example.calculateur.core.affichage.IAffichage;
+import com.example.calculateur.core.calcul.Calculateur;
+import com.example.calculateur.core.calcul.ICalcul;
+import com.example.calculateur.core.calcul.OperateurType;
+import com.example.calculateur.core.calcul.Operation;
+import com.example.calculateur.core.commun.FormatUtils;
+import com.example.calculateur.core.commun.erreur.CommunException;
+import com.example.calculateur.core.commun.erreur.ErrorType;
 
 /**
  * Point d'entrée : calculateur interactif en ligne de commande.
@@ -25,46 +29,33 @@ public class App {
 
         while (sauvegarde == false || annulation  == false) {
             try {
-                affichage.afficher("> ");
+                 affichage.afficher("Saisir > ");
                 if (!scanner.hasNextLine()) {
                     break;
                 }      
             
                 String ligne = scanner.nextLine().trim() ;
-                affichage.afficher(ligne);
+                affichage.afficher("Calcul : " + ligne);
                 annulation = affichage.verifierAnnulation(ligne);
                 if(annulation) break;                
                 if (!affichage.verifierFormatOk(ligne)) {
                     continue;
                 }
                 String[] parties = ligne.split("\\s+");
-                double a = convertirEnNombre(parties[0]);
-                double b = convertirEnNombre(parties[2]);
-                double resultat = calculateur.calculer(a, parties[1].charAt(0), b);
-                affichage.afficher("=  {" +resultat +"}");
+                Operation operation = new Operation(FormatUtils.convertirEnNombre(parties[0]), 
+                    FormatUtils.convertirEnNombre(parties[2]),
+                    OperateurType
+                        .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
+
+                double resultat = calculateur.calculer(operation);
+
+                affichage.afficher("Resultat =  {" + resultat + "}");
         
             } catch (CommunException e) {
-                //affichage.afficherErreur("Erreur de calcul : " + e.getMessage(), e.getMessage());
-            }/*  catch (NumberFormatException e) {
-                //affichage.afficherErreur("Erreur de format : " + e.getMessage(), e.getMessage());
-            } catch (ArithmeticException e) {
-                //affichage.afficherErre
-            String[] parties = ligne.split("\\s+");ur("Erreur arithmétique : " + e.getMessage(), e.getMessage());
-            } catch (IllegalArgumentException e) {
-                //affichage.afficherErreur("Opérateur inconnu : " + e.getMessage(), e.getMessage());
-            } catch (Exception e) {
-               //ffichage.afficherErreur("Erreur inattendue : " + e.getMessage(), e.getMessage());
-            }*/
+                affichage.afficher(e.getErrorType().getMessage());
+            }
         }       
         scanner.close();
         affichage.terminer();
     }
-
-    private static double convertirEnNombre(String texte) throws CommunException {
-    try {
-        return Double.parseDouble(texte);
-    } catch (NumberFormatException e) {
-        throw new CommunException("Nombre invalide", e);
-    }
-}
 }

@@ -1,11 +1,12 @@
-package com.example.core.calcul;
+package com.example.calculateur.core.calcul;
 
 public enum OperateurType {
 ADDITION("+"),
     SOUSTRACTION("-"),
     MULTIPLICATION("*"),
     MULTIPLICATION_X("x"),
-    DIVISION("/");
+    DIVISION("/"),
+    NOT_AN_OPERATEUR("");
 
     private final String symbole;
 
@@ -23,6 +24,6 @@ ADDITION("+"),
                 return operateur;
             }
         }
-        throw new IllegalArgumentException("Opérateur inconnu : " + symbole);
+        return NOT_AN_OPERATEUR;
     }
 }
