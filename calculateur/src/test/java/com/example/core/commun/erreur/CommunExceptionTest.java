@@ -3,7 +3,6 @@ package com.example.core.commun.erreur;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import java.util.IllegalFormatException;
 
 import org.junit.jupiter.api.Test;
 

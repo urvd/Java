@@ -24,21 +24,20 @@ public class App {
         affichage.commencer();
 
         while (sauvegarde == false || annulation  == false) {
-            affichage.afficher("> ");
-            if (!scanner.hasNextLine()) {
-                break;
-            }
-            String ligne = scanner.nextLine().trim() ;
-            affichage.afficher(ligne);
-            annulation = affichage.verifierAnnulation(ligne);
-            if(annulation) break;
-            
-           
             try {
-                String[] parties = ligne.split("\\s+");
-                if (affichage.verifierFormatOk(ligne)) {
+                affichage.afficher("> ");
+                if (!scanner.hasNextLine()) {
+                    break;
+                }      
+            
+                String ligne = scanner.nextLine().trim() ;
+                affichage.afficher(ligne);
+                annulation = affichage.verifierAnnulation(ligne);
+                if(annulation) break;                
+                if (!affichage.verifierFormatOk(ligne)) {
                     continue;
                 }
+                String[] parties = ligne.split("\\s+");
                 double a = convertirEnNombre(parties[0]);
                 double b = convertirEnNombre(parties[2]);
                 double resultat = calculateur.calculer(a, parties[1].charAt(0), b);
@@ -49,7 +48,8 @@ public class App {
             }/*  catch (NumberFormatException e) {
                 //affichage.afficherErreur("Erreur de format : " + e.getMessage(), e.getMessage());
             } catch (ArithmeticException e) {
-                //affichage.afficherErreur("Erreur arithmétique : " + e.getMessage(), e.getMessage());
+                //affichage.afficherErre
+            String[] parties = ligne.split("\\s+");ur("Erreur arithmétique : " + e.getMessage(), e.getMessage());
             } catch (IllegalArgumentException e) {
                 //affichage.afficherErreur("Opérateur inconnu : " + e.getMessage(), e.getMessage());
             } catch (Exception e) {

@@ -31,11 +31,12 @@ public class Calculateur implements ICalcul {
      */
     public double calculer(double a, char operateur, double b) throws CommunException {
         try {    
-            return switch (operateur) {
-                case '+' -> additionner(a, b);
-                case '-' -> soustraire(a, b);
-                case '*', 'x' -> multiplier(a, b);
-                case '/' -> diviser(a, b);
+            OperateurType operateurType = OperateurType.rechercheOperateur(String.valueOf(operateur));
+            return switch (operateurType) {
+                case ADDITION -> additionner(a, b);
+                case SOUSTRACTION -> soustraire(a, b);
+                case MULTIPLICATION, MULTIPLICATION_X -> multiplier(a, b);
+                case DIVISION -> diviser(a, b);
                 default -> throw new IllegalArgumentException("Opérateur inconnu : " + operateur);
             };
         } catch (ArithmeticException | IllegalArgumentException e) {
