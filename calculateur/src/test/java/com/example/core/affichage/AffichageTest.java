@@ -1,12 +1,11 @@
-package com.example.calculateur;
+package com.example.core.affichage;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-
-import com.example.affichage.Affichage;
-import com.example.affichage.IAffichage;
+import com.example.core.commun.erreur.CommunException;
 
 public class AffichageTest {
     private final IAffichage affichage = new Affichage();
@@ -27,18 +26,18 @@ public class AffichageTest {
     }
 
      @Test 
-    void affichage_verification_format_forrect() {
+    void affichage_verification_format_forrect() throws CommunException {
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK1));
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK2));
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK3));
     }
 
     @Test 
-    void affichage_verification_format_non_correct() {
-
-        assertFalse(affichage.verifierFormatOk(TEXTE_FORMAT_STR0.trim()));
-        assertFalse(affichage.verifierFormatOk(TEXTE_FORMAT_STR1));
-        assertFalse(affichage.verifierFormatOk(TEXTE_FORMAT_STR2));
-        assertFalse(affichage.verifierFormatOk(TEXTE_FORMAT_STR3));
+    void affichage_verification_format_non_correct() throws CommunException {
+        String str0 = TEXTE_FORMAT_STR0.trim();
+        assertThrows(CommunException.class, () -> affichage.verifierFormatOk(str0));
+        assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR1));
+        assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR2));
+        assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR3));
     }
 }

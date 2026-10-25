@@ -1,11 +1,16 @@
-package com.example.affichage;
-import java.util.Arrays;
+package com.example.core.affichage;
+
+import java.util.IllegalFormatException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.example.core.commun.erreur.CommunException;
+
+
 public class Affichage implements IAffichage {
     private static final Logger log = LoggerFactory.getLogger(Affichage.class);
+
     @Override
     public void commencer() {
         log.info("=== Calculateur ===");
@@ -21,13 +26,6 @@ public class Affichage implements IAffichage {
     @Override
     public void afficher(String texte) {
         log.info(texte);
-    }
-    //TODO : mieux gérer les exception, les centralisés si possible
-    @Override
-    public void afficherErreur(String texte, String msgErr) {
-        log.info(texte);
-        //log.error(msgErr);
-        log.info(msgErr);
     }
 
     
@@ -52,22 +50,15 @@ public class Affichage implements IAffichage {
      * exclure 2 entités.
      * */
     @Override
-    public boolean verifierFormatOk(String ligne) {
-        try{
+    public boolean verifierFormatOk(String ligne) throws CommunException {
+        try {
             String[] parties = ligne.split("\\s+");
-            afficher(ligne);
-            afficher(Arrays.toString(parties));
             if (parties.length != 3) {
-                afficher("Format attendu : <nombre> <opérateur> <nombre>");
-                return false;
-            }    
-            return true;
-        }catch(ArrayIndexOutOfBoundsException e){
-            afficherErreur("Erreur de saisie !", e.getMessage());
-            return false;
+                throw new IllegalArgumentException("Format incorrect : " + ligne);
+            }
+            return parties.length == 3;
+        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+            throw new CommunException("CommunException " + ligne, e);
         }
-       
-      
     }
-
 }
