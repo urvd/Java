@@ -1,11 +1,10 @@
 package com.example.calculateur.core.commun.erreur;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 public class CommunException extends Exception {
     private ErrorType errorType;
-    private static final Logger LOGGER = Logger.getLogger(CommunException.class.getName());
+    //private static final Logger LOGGER = Logger.getLogger(CommunException.class.getName());
 
 
     public CommunException(ErrorType errorType, Throwable cause ) {

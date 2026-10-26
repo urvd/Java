@@ -3,8 +3,11 @@ package com.example.calculateur.core.affichage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.example.calculateur.core.action.ActionType;
 import com.example.calculateur.core.commun.erreur.CommunException;
 import static com.example.calculateur.core.commun.erreur.ErrorType.*;
+
+import java.util.Arrays;
 
 public class Affichage implements IAffichage {
     private static final Logger log = LoggerFactory.getLogger(Affichage.class);
@@ -12,7 +15,8 @@ public class Affichage implements IAffichage {
     @Override
     public void commencer() {
         log.info("=== Calculateur ===");
-        log.info("Saisissez une opération (ex : 3 + 4), ou 'q' pour quitter.");
+        log.info("Saisissez une opération (ex : 3 + 4), ou 'q' pour quitter ou 'r' "
+                + "pour reutilisé le resultat dans un calcul.");
         log.info("choisir l'operande parmis : '+', '-', 'x,', '/'");
     }
 
@@ -28,12 +32,16 @@ public class Affichage implements IAffichage {
 
     
     @Override
-    public boolean verifierAnnulation(String ligne) {
+    public ActionType verifierActionUser(String ligne) {
         //Vérifier le caractère d'annulation.
-        if (ligne.equalsIgnoreCase("q")) {
-            return true;
+        switch (ligne.toLowerCase()) {
+            case "q":
+                return ActionType.QUITTER;
+            case "r":
+                return ActionType.RECALCULER;
+            default:
+                return ActionType.CALCULER;
         }
-        return false;
     }
 
     /**
@@ -51,7 +59,8 @@ public class Affichage implements IAffichage {
     public boolean verifierFormatOk(String ligne) throws CommunException {
         try {
             String[] parties = ligne.split("\\s+");
-            if (parties.length != 3) {
+            afficher(Arrays.toString(parties));
+            if (parties.length != 3 && parties.length != 2) {
                 throw new IllegalArgumentException("Format incorrect : " + ligne);
             }
             return parties.length == 3;

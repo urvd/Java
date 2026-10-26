@@ -1,6 +1,7 @@
 package com.example.calculateur.core.calcul;
 
 import com.example.calculateur.core.commun.erreur.CommunException;
+import com.example.calculateur.core.resultat.Resultat;
 
 import static com.example.calculateur.core.commun.erreur.ErrorType.*;
 /**
@@ -8,29 +9,29 @@ import static com.example.calculateur.core.commun.erreur.ErrorType.*;
  */
 public class Calculateur implements ICalcul {
 
-    private double additionner(double a, double b) {
-        return a + b;
+    private Resultat additionner(double a, double b) {
+        return new Resultat(a + b, true);
     }
 
-    private double soustraire(double a, double b) {
-        return a - b;
+    private Resultat soustraire(double a, double b) {
+        return new Resultat(a - b, true);
     }
 
-    private double multiplier(double a, double b) {
-        return a * b;
+    private Resultat multiplier(double a, double b) {
+        return new Resultat(a * b, true);
     }
 
-    private double diviser(double a, double b) throws CommunException {
+    private Resultat diviser(double a, double b) throws CommunException {
         if (b == 0) {
             throw new ArithmeticException("Division par zéro impossible");
         }
-        return a / b;
+        return new Resultat(a / b, true);
     }
 
     /**
      * Applique l'opérateur donné (+, -, * ou x, /) aux deux opérandes.
      */
-    public double calculer(Operation operation) throws CommunException {
+    public Resultat calculer(Operation operation) throws CommunException {
         try {    
             return switch (operation.operateur()) {
                 case ADDITION -> additionner(operation.operande1(), operation.operande2());

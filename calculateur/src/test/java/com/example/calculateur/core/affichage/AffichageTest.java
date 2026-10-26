@@ -1,16 +1,19 @@
 package com.example.calculateur.core.affichage;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.example.calculateur.core.action.ActionType;
 import com.example.calculateur.core.commun.erreur.CommunException;
 
 public class AffichageTest {
     private final IAffichage affichage = new Affichage();
     private static final String TEXTE_ANNULATION = "q";
+    private static final String TEXTE_RECALCULER = "r";
+    private static final String TEXTE_CALCULER = "c";
     private static final String TEXTE_AUTRE  = "p";
     private static final String TEXTE_FORMAT_OK1 = "3 x 3";
     private static final String TEXTE_FORMAT_OK2 = "L S U";
@@ -22,8 +25,16 @@ public class AffichageTest {
 
     @Test 
     void affichage_verification_annulation() {
-        assertTrue(affichage.verifierAnnulation(TEXTE_ANNULATION));
-        assertFalse(affichage.verifierAnnulation(TEXTE_AUTRE));
+        assertEquals(ActionType.QUITTER, affichage.verifierActionUser(TEXTE_ANNULATION));
+    }
+        @Test 
+    void affichage_verification_calculer() {
+        assertEquals(ActionType.CALCULER, affichage.verifierActionUser(TEXTE_CALCULER));
+        assertEquals(ActionType.CALCULER, affichage .verifierActionUser(TEXTE_AUTRE));
+    }
+        @Test 
+    void affichage_verification_recalculer() {
+        assertEquals(ActionType.RECALCULER, affichage.verifierActionUser(TEXTE_RECALCULER));
     }
 
      @Test 
