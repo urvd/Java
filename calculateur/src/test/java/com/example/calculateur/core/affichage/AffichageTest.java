@@ -42,12 +42,12 @@ public class AffichageTest {
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK1));
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK2));
         assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_OK3));
+        // 2 entités (ex : "+ 4") : format admis pour réutiliser le résultat précédent
+        assertTrue(affichage.verifierFormatOk(TEXTE_FORMAT_STR0.trim()));
     }
 
-    @Test 
+    @Test
     void affichage_verification_format_non_correct() throws CommunException {
-        String str0 = TEXTE_FORMAT_STR0.trim();
-        assertThrows(CommunException.class, () -> affichage.verifierFormatOk(str0));
         assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR1));
         assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR2));
         assertThrows(CommunException.class, () -> affichage.verifierFormatOk(TEXTE_FORMAT_STR3));
