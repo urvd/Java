@@ -34,7 +34,7 @@ public class AffichageTest {
     }
         @Test 
     void affichage_verification_recalculer() {
-        assertEquals(ActionType.RECALCULER, affichage.verifierActionUser(TEXTE_RECALCULER));
+        assertEquals(ActionType.RE_CALCULER, affichage.verifierActionUser(TEXTE_RECALCULER));
     }
 
      @Test 
