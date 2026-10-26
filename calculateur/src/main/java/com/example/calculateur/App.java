@@ -11,6 +11,7 @@ import com.example.calculateur.core.calcul.OperateurType;
 import com.example.calculateur.core.calcul.Operation;
 import com.example.calculateur.core.commun.FormatUtils;
 import com.example.calculateur.core.commun.erreur.CommunException;
+import com.example.calculateur.core.commun.erreur.ErrorType;
 import com.example.calculateur.core.resultat.Resultat;
 
 /**
@@ -32,7 +33,13 @@ public class App {
 
         while (currentAction != ActionType.QUITTER) {
             try {
-                 affichage.afficher("Saisir > ");
+                if (currentAction == ActionType.RE_CALCULER) {
+                    affichage.afficher("Saisir (" + resultatActual.valeur() + ") >");
+                } else {
+                    if (currentAction == ActionType.INITIALISATION) resultatActual = resultat0;
+                    affichage.afficher("Saisir > ");
+                }
+
                 if (!scanner.hasNextLine()) {
                     break;
                 }      
@@ -45,32 +52,20 @@ public class App {
                 currentAction = affichage.verifierActionUser(ligne);
                 if(currentAction == ActionType.QUITTER) break;       
 
-                if (currentAction == ActionType.RECALCULER 
+                if (currentAction == ActionType.SAUVEGUARDER
                     || !affichage.verifierFormatOk(ligne)) {
-                    if (currentAction == ActionType.RECALCULER) currentAction = ActionType.CALCULER;
+                    if (currentAction == ActionType.SAUVEGUARDER) currentAction = ActionType.RE_CALCULER;
                     continue;
                 }
 
                 // Convertion en operation
                 String[] parties = ligne.split("\\s+");
-                if(parties.length == 2 && currentAction == ActionType.CALCULER) {
-                    operation = new Operation(resultat0.valeur(), 
-                    FormatUtils.convertirEnNombre(parties[1]),
-                    OperateurType
-                        .rechercheOperateur(String.valueOf(parties[0].charAt(0))));
-                } else if (parties.length == 2 && currentAction == ActionType.RECALCULER) {
-                    operation = new Operation(resultatActual.valeur(), 
-                    FormatUtils.convertirEnNombre(parties[0]),
-                    OperateurType
-                        .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
-                    currentAction = ActionType.CALCULER;
+                if (parties.length == 2) {
+                    operation = creerOperation(parties, resultatActual.valeur());
                 } else {
-                    operation = new Operation(FormatUtils.convertirEnNombre(parties[0]), 
-                    FormatUtils.convertirEnNombre(parties[2]),
-                    OperateurType
-                        .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
+                    operation = creerOperation(parties);
                 }
-               
+
                 // Calcul
                 resultatActual = calculateur.calculer(operation);
 
@@ -83,4 +78,20 @@ public class App {
         scanner.close();
         affichage.terminer();
     }
+
+    private static Operation creerOperation(String[] parties, double exValeur) throws CommunException {
+
+        return new Operation(exValeur,
+                    FormatUtils.convertirEnNombre(parties[1]),
+                    OperateurType
+                            .rechercheOperateur(String.valueOf(parties[0].charAt(0))));
+    }
+
+    private static Operation creerOperation(String[] parties) throws CommunException {
+        return new Operation(FormatUtils.convertirEnNombre(parties[0]),
+                    FormatUtils.convertirEnNombre(parties[2]),
+                    OperateurType
+                            .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
+    }
+
 }

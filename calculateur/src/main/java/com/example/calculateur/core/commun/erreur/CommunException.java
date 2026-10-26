@@ -26,16 +26,15 @@ public class CommunException extends Exception {
             setErrorType(errorType);
             //LOGGER.log(Level.OFF, cause.getMessage());
         } else if (cause instanceof IllegalArgumentException 
-            && errorType == ErrorType.ILLEGAL_ARGUMENT_ERROR
-            && errorType != ErrorType.FORMAT_ERROR) {
+            && (errorType == ErrorType.ILLEGAL_ARGUMENT_ERROR
+            || errorType != ErrorType.FORMAT_ERROR)) {
             setErrorType(errorType);
             //LOGGER.info(errorType.getMessage());
             //LOGGER.log(Level.OFF, cause.getLocalizedMessage());
         } else {
             if (this.errorType != ErrorType.UNDEFINED_ERROR){
                 setErrorType(errorType);
-            }
-            else this.errorType = ErrorType.UNDEFINED_ERROR;
+            } else this.errorType = ErrorType.UNDEFINED_ERROR;
             //LOGGER.info(errorType.getMessage());
             //LOGGER.log(Level.WARNING, cause.getMessage());
             //LOGGER.log(Level.SEVERE, cause.getLocalizedMessage());

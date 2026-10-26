@@ -37,8 +37,8 @@ public class Affichage implements IAffichage {
         switch (ligne.toLowerCase()) {
             case "q":
                 return ActionType.QUITTER;
-            case "r":
-                return ActionType.RECALCULER;
+            case "s", "r":
+                return ActionType.RE_CALCULER;
             default:
                 return ActionType.CALCULER;
         }
@@ -68,13 +68,7 @@ public class Affichage implements IAffichage {
                 throw new IllegalArgumentException("Format incorrect : " + ligne);
             }
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
-            if (e instanceof IllegalArgumentException) {
-                throw new CommunException(FORMAT_ERROR, e);
-            } else if (e instanceof ArrayIndexOutOfBoundsException) {
-                throw new CommunException(ARRAY_INDEX_OUT_OF_BOUNDS_ERROR, e);
-            } else {
-                throw new CommunException(UNDEFINED_ERROR, e);
-            }
+            throw new CommunException(FORMAT_ERROR, e);
         }
     }
 }

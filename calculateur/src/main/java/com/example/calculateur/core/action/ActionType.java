@@ -3,7 +3,8 @@ package com.example.calculateur.core.action;
 public enum ActionType {
     INITIALISATION("i"),
     CALCULER("c"),
-    RECALCULER("r"),
+    RE_CALCULER("r"),
+    SAUVEGUARDER("s"),
     QUITTER("q");
 
     private final String action;
