@@ -60,16 +60,19 @@ public class Affichage implements IAffichage {
         try {
             String[] parties = ligne.split("\\s+");
             afficher(Arrays.toString(parties));
-            if (parties.length != 3 && parties.length != 2) {
+            if (parties.length == 3) {
+                return true;
+            } else if (parties.length == 2) {
+                return true;
+            } else {
                 throw new IllegalArgumentException("Format incorrect : " + ligne);
             }
-            return parties.length == 3;
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
             if (e instanceof IllegalArgumentException) {
                 throw new CommunException(FORMAT_ERROR, e);
             } else if (e instanceof ArrayIndexOutOfBoundsException) {
                 throw new CommunException(ARRAY_INDEX_OUT_OF_BOUNDS_ERROR, e);
-            }else {
+            } else {
                 throw new CommunException(UNDEFINED_ERROR, e);
             }
         }
