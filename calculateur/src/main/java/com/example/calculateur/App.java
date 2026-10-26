@@ -22,6 +22,7 @@ public class App {
         ICalcul calculateur = new Calculateur();
         IAffichage affichage = new Affichage();
         ActionType currentAction = ActionType.INITIALISATION;
+        Operation operation = new Operation();
         Resultat resultat0 = new Resultat(0.0, false);
         Resultat resultatActual = new Resultat(0.0, false);
 
@@ -36,21 +37,22 @@ public class App {
                     break;
                 }      
             
-                String ligne = scanner.nextLine().trim() ;
+                String ligne = scanner.nextLine().trim();
+                //affichage.afficher("INIT : " + resultat0.valeur() + " ACTUAL : " + resultatActual.valeur());
+                //affichage.afficher("Dernière ACTION est " + currentAction);
 
                 // Vérification de l'action de l'utilisateur - cas d'annulation ou de recalcul
                 currentAction = affichage.verifierActionUser(ligne);
                 if(currentAction == ActionType.QUITTER) break;       
-                affichage.afficher("INIT : " + resultat0.valeur() + " ACTUAL : " + resultatActual.valeur());
-                affichage.afficher("Dernière ACTION est " + currentAction);
+
                 if (currentAction == ActionType.RECALCULER 
                     || !affichage.verifierFormatOk(ligne)) {
                     if (currentAction == ActionType.RECALCULER) currentAction = ActionType.CALCULER;
                     continue;
                 }
+
                 // Convertion en operation
                 String[] parties = ligne.split("\\s+");
-                Operation operation = null;
                 if(parties.length == 2 && currentAction == ActionType.CALCULER) {
                     operation = new Operation(resultat0.valeur(), 
                     FormatUtils.convertirEnNombre(parties[1]),
@@ -62,7 +64,7 @@ public class App {
                     OperateurType
                         .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
                     currentAction = ActionType.CALCULER;
-                } else { //
+                } else {
                     operation = new Operation(FormatUtils.convertirEnNombre(parties[0]), 
                     FormatUtils.convertirEnNombre(parties[2]),
                     OperateurType
