@@ -42,20 +42,23 @@ public class App {
                 currentAction = affichage.verifierActionUser(ligne);
                 if(currentAction == ActionType.QUITTER) break;       
                 affichage.afficher("INIT : " + resultat0.valeur() + " ACTUAL : " + resultatActual.valeur());
+                affichage.afficher("Dernière ACTION est " + currentAction);
                 if (currentAction == ActionType.RECALCULER 
                     || !affichage.verifierFormatOk(ligne)) {
+                    if (currentAction == ActionType.RECALCULER) currentAction = ActionType.CALCULER;
                     continue;
                 }
+                // Convertion en operation
                 String[] parties = ligne.split("\\s+");
                 Operation operation = null;
                 if(parties.length == 2 && currentAction == ActionType.CALCULER) {
-                    operation  = new Operation(resultat0.valeur(), 
+                    operation = new Operation(resultat0.valeur(), 
                     FormatUtils.convertirEnNombre(parties[1]),
                     OperateurType
                         .rechercheOperateur(String.valueOf(parties[0].charAt(0))));
                 } else if (parties.length == 2 && currentAction == ActionType.RECALCULER) {
                     operation = new Operation(resultatActual.valeur(), 
-                    FormatUtils.convertirEnNombre(parties[1]),
+                    FormatUtils.convertirEnNombre(parties[0]),
                     OperateurType
                         .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
                     currentAction = ActionType.CALCULER;
@@ -66,7 +69,7 @@ public class App {
                         .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
                 }
                
-
+                // Calcul
                 resultatActual = calculateur.calculer(operation);
 
                 affichage.afficher("Resultat =  {" + resultatActual.valeur() + "}");
