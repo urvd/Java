@@ -44,22 +44,11 @@ public class Affichage implements IAffichage {
         }
     }
 
-    /**
-     * TODO : Faire une vérification de la sauveguarde
-     * verifierSauvegarde(String ligne)
-     * /
-    
-    /**
-     * Vérification du Format : en 3 entité séparé
-     * TODO : Format: 1 - A Faire évoluer en suite ou liste d'entités séparé
-     * TODO : Format: 2 - A Faire évoluer pour admetre 1 seul entité mais pas e
-     * exclure 2 entités.
-     * */
     @Override
     public boolean verifierFormatOk(String ligne) throws CommunException {
         try {
             String[] parties = ligne.split("\\s+");
-            afficher(Arrays.toString(parties));
+
             if (parties.length == 3) {
                 return true;
             } else if (parties.length == 2) {

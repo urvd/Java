@@ -1,5 +1,6 @@
 package com.example.calculateur;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import com.example.calculateur.core.action.ActionType;
@@ -40,14 +41,13 @@ public class App {
                     affichage.afficher("Saisir > ");
                 }
 
-                if (!scanner.hasNextLine()) {
-                    break;
-                }      
+
             
                 String ligne = scanner.nextLine().trim();
+                String[] parties = ligne.split("\\s+");
                 //affichage.afficher("INIT : " + resultat0.valeur() + " ACTUAL : " + resultatActual.valeur());
                 //affichage.afficher("Dernière ACTION est " + currentAction);
-
+                affichage.afficher(Arrays.toString(parties));
                 // Vérification de l'action de l'utilisateur - cas d'annulation ou de recalcul
                 currentAction = affichage.verifierActionUser(ligne);
                 if(currentAction == ActionType.QUITTER) break;       
@@ -59,7 +59,6 @@ public class App {
                 }
 
                 // Convertion en operation
-                String[] parties = ligne.split("\\s+");
                 if (parties.length == 2) {
                     operation = creerOperation(parties, resultatActual.valeur());
                 } else {
@@ -80,18 +79,17 @@ public class App {
     }
 
     private static Operation creerOperation(String[] parties, double exValeur) throws CommunException {
-
         return new Operation(exValeur,
                     FormatUtils.convertirEnNombre(parties[1]),
                     OperateurType
-                            .rechercheOperateur(String.valueOf(parties[0].charAt(0))));
+                            .rechercheOperateur(parties[0]));
     }
 
     private static Operation creerOperation(String[] parties) throws CommunException {
         return new Operation(FormatUtils.convertirEnNombre(parties[0]),
                     FormatUtils.convertirEnNombre(parties[2]),
                     OperateurType
-                            .rechercheOperateur(String.valueOf(parties[1].charAt(0))));
+                            .rechercheOperateur(parties[1]));
     }
 
 }
