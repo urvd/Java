@@ -54,9 +54,14 @@ public class App {
                 currentAction = affichage.verifierActionUser(ligne);
                 if(currentAction == ActionType.QUITTER) break;       
 
+                // 'r' ou 's' : pas de calcul, la prochaine saisie réutilise le résultat
                 if (currentAction == ActionType.SAUVEGUARDER
-                    || !affichage.verifierFormatOk(ligne)) {
-                    if (currentAction == ActionType.SAUVEGUARDER) currentAction = ActionType.RE_CALCULER;
+                    || currentAction == ActionType.RE_CALCULER) {
+                    currentAction = ActionType.RE_CALCULER;
+                    continue;
+                }
+
+                if (!affichage.verifierFormatOk(ligne)) {
                     continue;
                 }
 
