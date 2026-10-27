@@ -34,14 +34,15 @@ public class App {
 
         while (currentAction != ActionType.QUITTER) {
             try {
+                if (!scanner.hasNextLine()) {
+                    break;
+                }
                 if (currentAction == ActionType.RE_CALCULER) {
                     affichage.afficher("Saisir (" + resultatActual.valeur() + ") >");
                 } else {
                     if (currentAction == ActionType.INITIALISATION) resultatActual = resultat0;
                     affichage.afficher("Saisir > ");
                 }
-
-
             
                 String ligne = scanner.nextLine().trim();
                 String[] parties = ligne.split("\\s+");
