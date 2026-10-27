@@ -34,16 +34,17 @@ public class App {
 
         while (currentAction != ActionType.QUITTER) {
             try {
-                if (!scanner.hasNextLine()) {
-                    break;
-                }
+                // 1er affichage avant saisie
                 if (currentAction == ActionType.RE_CALCULER) {
                     affichage.afficher("Saisir (" + resultatActual.valeur() + ") >");
                 } else {
                     if (currentAction == ActionType.INITIALISATION) resultatActual = resultat0;
                     affichage.afficher("Saisir > ");
                 }
-            
+                // Detection d'une saisie
+                if (!scanner.hasNextLine()) {
+                    break;
+                }
                 String ligne = scanner.nextLine().trim();
                 String[] parties = ligne.split("\\s+");
                 //affichage.afficher("INIT : " + resultat0.valeur() + " ACTUAL : " + resultatActual.valeur());
